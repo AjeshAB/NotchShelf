@@ -2,6 +2,10 @@
 
 A native macOS 26+ shelf and clipboard history tucked into the MacBook notch. Built with Swift, AppKit, SwiftUI, SwiftData, KeyboardShortcuts, and Sparkle.
 
+[![NotchShelf demo](docs/media/demo.gif)](docs/media/demo.mp4)
+
+*Click the preview to watch the full-quality demo.*
+
 ## Run
 
 Requires Xcode with a macOS 26+ SDK and XcodeGen (`brew install xcodegen`).
