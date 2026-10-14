@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Test
+        run: ./scripts/test.sh
+
+      - name: Build and package
+        run: ./scripts/git-build.sh && ./scripts/package-local.sh
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mv build/NotchShelf-development.dmg "build/NotchShelf-${GITHUB_REF_NAME}.dmg"
+          gh release create "$GITHUB_REF_NAME" "build/NotchShelf-${GITHUB_REF_NAME}.dmg" \
+            --title "NotchShelf ${GITHUB_REF_NAME}" --generate-notes
